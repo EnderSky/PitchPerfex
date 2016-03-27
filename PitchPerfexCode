@@ -1,1 +1,173 @@
 //Welcome to PitchPerfex
+
+int randNo;
+int repeatNo;
+int played = 0;
+int randomTune[10];
+int tries = 0;
+int kp1, kp2, kp3, kp4;
+int checkNotes[] = {'c', 'd', 'e', 'f', 'g', 'a', 'b', 'C'};
+int checkTones[] = {262, 294, 330, 349, 392, 440, 494, 523};
+void setup() {
+  Serial.begin(9600);
+  pinMode(2, INPUT_PULLUP);//(c)
+  pinMode(3, INPUT_PULLUP);
+  pinMode(4, INPUT_PULLUP);//(e)
+  pinMode(5, INPUT_PULLUP);
+  pinMode(6, INPUT_PULLUP);//(g)
+  pinMode(7, INPUT_PULLUP);
+  pinMode(8, INPUT_PULLUP);//(b)
+  pinMode(9, INPUT_PULLUP);
+  pinMode(10, INPUT_PULLUP); //Repeat Tune
+  pinMode(13, OUTPUT); //Speaker Pin
+  randomSeed(analogRead(0));  
+}
+void playCorrectTune(){
+  int speakerPin = 13;
+  for(int i = 0; i < 8; i++){
+    tone(speakerPin, checkTones[i]); 
+    delay(100);
+    noTone(speakerPin);
+  }
+}
+
+void playWrongTune(){
+  int speakerPin = 13;
+  for(int i = 8; i > -1; i--){
+    tone(speakerPin, checkTones[i]);
+    delay(100);
+    noTone(speakerPin); 
+  }
+}
+void rememberSeq(int tries, int key)
+{
+  if (tries == 1){
+    kp1 = key;
+  }
+  else if (tries == 2){
+    kp2 = key;
+  }
+  else if (tries == 3){
+    kp3 = key;
+  }
+  else if(tries == 4){
+    kp4 = key;
+  }
+   if(tries == 4){
+       
+      if(kp1 == randomTune[0]+1 && 
+         kp2 == randomTune[1]+1 &&
+         kp3 == randomTune[2]+1 &&
+         kp4 == randomTune[3]+1)
+      {
+        Serial.println("Correct. Next tone");
+        playCorrectTune();
+        delay(1000);
+        tries = 0;
+        played = 0;
+      }else{
+        Serial.println("Incorrect. Next tone.");
+        playWrongTune();
+        delay(1000);
+        tries = 0;
+        played = 0;
+      }
+      
+   }
+}
+
+
+void setTune(){
+  int speakerPin = 13;
+  int notes[] = {'c', 'e', 'g', 'b'};
+  int tones[] = {262, 330, 392, 494};
+    for (int i = 0; i < 4; i++) {
+    randNo = random(0,4);
+    randomTune[i] = randNo;
+    tone(speakerPin, tones[randNo]);
+    delay(1000);
+    noTone(speakerPin);
+}
+  for(int i=0;i<4;i++){
+    Serial.println(randomTune[i]+1);
+  }
+}
+
+
+void loop() {
+  
+  int sensorVal = digitalRead(2);
+  int sensorVal2 = digitalRead(4);
+  int sensorVal4 = digitalRead(6);
+  int sensorVal6 = digitalRead(8);
+  int sensorVal8 = digitalRead(10); //Repeat Tune
+  int speakerPin = 13;
+  int notes[] = {'c', 'e', 'g', 'b'};
+  int tones[] = {262, 330, 392, 494};
+  if(played==1){
+     
+  }else{
+    setTune();
+    played = 1;
+  }
+  if(tries==4){
+    tries = 0;
+  }
+  sensorVal = digitalRead(2);
+  if (sensorVal == LOW)
+  {
+    Serial.println("You pressed the c key.");
+    tone(speakerPin, tones[0]);
+    delay(500);
+    noTone(speakerPin);
+    tries++;
+    rememberSeq(tries, 1);
+    delay(200);
+  }
+  
+  sensorVal2 = digitalRead(4);
+  if (sensorVal2 == LOW)
+  {
+    Serial.println("You pressed the e key.");
+    tone(speakerPin, tones[1]);
+    delay(500);
+    noTone(speakerPin);
+    tries++;
+    rememberSeq(tries, 2);
+    delay(200);
+  }
+  
+  sensorVal4 = digitalRead(6);
+  if (sensorVal4 == LOW)
+  {
+    Serial.println("You pressed the g key.");
+    tone(speakerPin, tones[2]);
+    delay(500);
+    noTone(speakerPin);
+    tries++;
+    rememberSeq(tries, 3);
+    delay(200);
+  }
+  
+  sensorVal6 = digitalRead(8);
+  if (sensorVal6 == LOW)
+  {
+    Serial.println("You pressed the b key.");
+    tone(speakerPin, tones[3]);
+    delay(500);
+    noTone(speakerPin);
+    tries++;
+    rememberSeq(tries, 4);
+    delay(200);
+  }
+ 
+ sensorVal8 = digitalRead(10);
+ if(sensorVal8==LOW){
+    for(int i=0;i<4;i++){
+    repeatNo = randomTune[i];
+    tone(speakerPin, tones[repeatNo]);
+    delay(1000);
+    noTone(speakerPin);
+    }
+ }
+}
