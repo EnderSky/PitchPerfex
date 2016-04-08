@@ -95,6 +95,8 @@ void setMode(){
   Serial.println("Welcome to PitchPerfex! Select a mode using the left and right buttons.");
   Serial.println("        < Piano Mode >        ");
   mode = 1;
+  
+  sensorVal9 = digitalRead(11);
   if (sensorVal9 == LOW){
     if(mode == 1){
       mode = 5;
@@ -115,7 +117,7 @@ void setMode(){
     }
     
   }
-
+  sensorVal10 = digitalRead(12);
   if (sensorVal10 == LOW){
     if (mode == 5){
       mode = 1;
@@ -160,8 +162,6 @@ void loop() {
   int tones[] = {262, 294, 330, 349, 392, 440, 494, 523};
   if(initialize == 0){
     setMode();
-  }else{
-    
   }
   
   if(played==1){
