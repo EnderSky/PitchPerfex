@@ -157,9 +157,13 @@ void loop() {
   int sensorVal8 = digitalRead(10); //Repeat Tune
   int sensorVal9 = digitalRead(11); //left
   int sensorVal10 = digitalRead(12);//right
+  int sensorVal11 = digitalRead(1); //menu/select button
   int speakerPin = 13;
   int notes[] = {'c', 'd', 'e', 'f', 'g', 'a', 'b', 'C'};
   int tones[] = {262, 294, 330, 349, 392, 440, 494, 523};
+  if(sensorVal11 == LOW){
+    initialize = 0;
+  }
   if(initialize == 0){
     setMode();
   }
