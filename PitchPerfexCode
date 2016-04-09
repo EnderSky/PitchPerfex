@@ -13,6 +13,7 @@ int notes[] = {'c', 'd', 'e', 'f', 'g', 'a', 'b', 'C'};
 int tones[] = {262, 294, 330, 349, 392, 440, 494, 523};
 void setup(){
   Serial.begin(9600);
+  pinMode(1, INPUT_PULLUP);//(Menu/Select Button)
   pinMode(2, INPUT_PULLUP);//(c)
   pinMode(3, INPUT_PULLUP);//(d)
   pinMode(4, INPUT_PULLUP);//(e)
@@ -89,54 +90,56 @@ void setMode(){
   int sensorVal8 = digitalRead(10); //Repeat Tune
   int sensorVal9 = digitalRead(11); //left
   int sensorVal10 = digitalRead(12);//right
+  int sensorVal11 = digitalRead(1); //Menu/Select
   int speakerPin = 13;
   int notes[] = {'c', 'd', 'e', 'f', 'g', 'a', 'b', 'C'};
   int tones[] = {262, 294, 330, 349, 392, 440, 494, 523};
   Serial.println("Welcome to PitchPerfex! Select a mode using the left and right buttons.");
   Serial.println("        < Piano Mode >        ");
   mode = 1;
-  
-  sensorVal9 = digitalRead(11);
-  if (sensorVal9 == LOW){
-    if(mode == 1){
-      mode = 5;
-    }else{
-      mode = mode - 1;
+  while(sensorVal11 != LOW){
+    sensorVal9 = digitalRead(11);
+    if (sensorVal9 == LOW){
+      if(mode == 1){
+        mode = 5;
+      }else{
+        mode = mode - 1;
+      }
+      if (mode == 1){
+        Serial.println("        < Piano Mode >        ");
+      }else if (mode == 2){
+        Serial.println("        < Easy Mode >       ");
+      }else if (mode == 3){
+        Serial.println("        < Medium Mode >       ");
+        setTries = 3;
+      }else if (mode == 4){
+        Serial.println("        < Hard Mode >       ");
+      }else if (mode == 5){
+        Serial.println("        < Survival Mode >        ");
+      }
+      
     }
-    if (mode == 1){
-      Serial.println("        < Piano Mode >        ");
-    }else if (mode == 2){
-      Serial.println("        < Easy Mode >       ");
-    }else if (mode == 3){
-      Serial.println("        < Medium Mode >       ");
-      setTries = 3;
-    }else if (mode == 4){
-      Serial.println("        < Hard Mode >       ");
-    }else if (mode == 5){
-      Serial.println("        < Survival Mode >        ");
+    sensorVal10 = digitalRead(12);
+    if (sensorVal10 == LOW){
+      if (mode == 5){
+        mode = 1;
+      }else{
+        mode = mode + 1;
+      }
+      if (mode == 1){
+        Serial.println("        < Piano Mode >        ");
+      }else if (mode == 2){
+        Serial.println("        < Easy Mode >       ");
+      }else if (mode == 3){
+        Serial.println("        < Medium Mode >       ");
+        setTries = 3;
+      }else if (mode == 4){
+        Serial.println("        < Hard Mode >       ");
+      }else if (mode == 5){
+        Serial.println("        < Survival Mode >        ");
+      }
+      
     }
-    
-  }
-  sensorVal10 = digitalRead(12);
-  if (sensorVal10 == LOW){
-    if (mode == 5){
-      mode = 1;
-    }else{
-      mode = mode + 1;
-    }
-    if (mode == 1){
-      Serial.println("        < Piano Mode >        ");
-    }else if (mode == 2){
-      Serial.println("        < Easy Mode >       ");
-    }else if (mode == 3){
-      Serial.println("        < Medium Mode >       ");
-      setTries = 3;
-    }else if (mode == 4){
-      Serial.println("        < Hard Mode >       ");
-    }else if (mode == 5){
-      Serial.println("        < Survival Mode >        ");
-    }
-    
   }
   initialize = 1;
 }
