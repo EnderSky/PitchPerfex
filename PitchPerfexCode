@@ -144,6 +144,8 @@ void setMode(){
   initialize = 1;
 }
 
+void piano() {
+  
 
 
 //Main Modes
