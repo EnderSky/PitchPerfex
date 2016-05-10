@@ -1,7 +1,7 @@
 //Welcome to PitchPerfex
 
 int randNo;
-int n;
+int n; // no. of notes per mode
 int survivalMode = 1;
 int survivalPart = 1;
 int initialize = 0;
