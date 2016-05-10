@@ -1,6 +1,7 @@
 //Welcome to PitchPerfex
 
 int randNo;
+int n;
 int initialize = 0;
 int mode;
 int setTries;
@@ -27,6 +28,23 @@ void setup(){
   pinMode(12, INPUT_PULLUP);//right
   pinMode(13, OUTPUT);//Piezo
   randomSeed(analogRead(0));
+}
+void prepareSensorVal(){
+  int sensorVal = digitalRead(2); //(c)
+  int sensorVal1 = digitalRead(3); //(d)
+  int sensorVal2 = digitalRead(4); //(e)
+  int sensorVal3 = digitalRead(5); //(f)
+  int sensorVal4 = digitalRead(6); //(g)
+  int sensorVal5 = digitalRead(7); //(a)
+  int sensorVal6 = digitalRead(8); //(b)
+  int sensorVal7 = digitalRead(9); //(C)
+  int sensorVal8 = digitalRead(10); //Repeat Tune
+  int sensorVal9 = digitalRead(11); //Left
+  int sensorVal10 = digitalRead(12);//Right
+  int sensorVal11 = digitalRead(1); //Menu/Select button
+  int speakerPin = 13;
+  int notes[] = {'c', 'd', 'e', 'f', 'g', 'a', 'b', 'C'};
+  int tones[] = {262, 294, 330, 349, 392, 440, 494, 523};
 }
 void playCorrectTune(){
   int speakerPin = 13;
@@ -64,36 +82,29 @@ void rememberSeq(int tries, int key){
 
 void setTune(){
   int speakerPin = 13;
-  int notes[] = {'c', 'e', 'g', 'b'};
-  int tones[] = {262, 330, 392, 494};
-    for (int i = 0; i < 4; i++) {
+  int notes[] = {'c', 'd', 'e', 'f', 'g', 'a', 'b', 'C'};
+  int tones[] = {262, 294, 330, 349, 392, 440, 494, 523};
+  if(mode == 2){
+    n = 3;
+  }else if(mode == 3){
+    n = 5;
+  }else if(mode == 4){
+    n = 8;
+  }
+    for (int i = 0; i < n; i++) {
     randNo = random(0,8);
     randomTune[i] = randNo;
     tone(speakerPin, tones[randNo]);
     delay(1000);
     noTone(speakerPin);
 }
-  for(int i=0;i<4;i++){
+  for(int i=0;i<n;i++){
     Serial.println(randomTune[i]+1);
   }
 }
 
 void setMode(){
-  int sensorVal = digitalRead(2); //(c)
-  int sensorVal1 = digitalRead(3); //(d)
-  int sensorVal2 = digitalRead(4); //(e)
-  int sensorVal3 = digitalRead(5); //(f)
-  int sensorVal4 = digitalRead(6); //(g)
-  int sensorVal5 = digitalRead(7); //(a)
-  int sensorVal6 = digitalRead(8); //(b)
-  int sensorVal7 = digitalRead(9); //(c)
-  int sensorVal8 = digitalRead(10); //Repeat Tune
-  int sensorVal9 = digitalRead(11); //left
-  int sensorVal10 = digitalRead(12);//right
-  int sensorVal11 = digitalRead(1); //Menu/Select
-  int speakerPin = 13;
-  int notes[] = {'c', 'd', 'e', 'f', 'g', 'a', 'b', 'C'};
-  int tones[] = {262, 294, 330, 349, 392, 440, 494, 523};
+  prepareSensorVal();
   Serial.println("Welcome to PitchPerfex! Select a mode using the left and right buttons.");
   Serial.println("        < Piano Mode >        ");
   mode = 1;
@@ -111,7 +122,6 @@ void setMode(){
         Serial.println("        < Easy Mode >       ");
       }else if (mode == 3){
         Serial.println("        < Medium Mode >       ");
-        setTries = 3;
       }else if (mode == 4){
         Serial.println("        < Hard Mode >       ");
       }else if (mode == 5){
@@ -141,31 +151,35 @@ void setMode(){
       
     }
   }
+  if (mode == 1){
+        Serial.println("You have chosen to enter Piano Mode.");
+      }else if (mode == 2){
+        Serial.println("You have chosen to enter Easy Mode.");
+      }else if (mode == 3){
+        Serial.println("You have chosen to enter Medium Mode.");
+      }else if (mode == 4){
+        Serial.println("You have chosen to enter Hard Mode.");
+      }else if (mode == 5){
+        Serial.println("You have chosen to enter Survival Mode.");
   initialize = 1;
 }
 
 void piano() {
-  
+  while(mode == 1 & sensorVal11 != LOW){
+    prepareSensorVal();
+    if (sensorVal == LOW){
+    Serial.println("C");
+    tone(speakerPin, tones[0]);
+    delay(100);
+    noTone(speakerPin);
+      }
+    }
+}
 
 
 //Main Modes
 void loop() {
-  
-  int sensorVal = digitalRead(2); //(c)
-  int sensorVal1 = digitalRead(3); //(d)
-  int sensorVal2 = digitalRead(4); //(e)
-  int sensorVal3 = digitalRead(5); //(f)
-  int sensorVal4 = digitalRead(6); //(g)
-  int sensorVal5 = digitalRead(7); //(a)
-  int sensorVal6 = digitalRead(8); //(b)
-  int sensorVal7 = digitalRead(9); //(c)
-  int sensorVal8 = digitalRead(10); //Repeat Tune
-  int sensorVal9 = digitalRead(11); //left
-  int sensorVal10 = digitalRead(12);//right
-  int sensorVal11 = digitalRead(1); //menu/select button
-  int speakerPin = 13;
-  int notes[] = {'c', 'd', 'e', 'f', 'g', 'a', 'b', 'C'};
-  int tones[] = {262, 294, 330, 349, 392, 440, 494, 523};
+  prepareSensorVal();
   if(sensorVal11 == LOW){
     initialize = 0;
   }
@@ -173,9 +187,9 @@ void loop() {
     setMode();
   }
   
-  if(played==1){
-     
-  }else{
+  if(mode == 1){
+     piano();
+  }else if(played==1 && mode != 1){
     setTune();
     played = 1;
   }
