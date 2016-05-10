@@ -2,6 +2,8 @@
 
 int randNo;
 int n;
+int survivalMode = 1;
+int survivalPart = 1;
 int initialize = 0;
 int mode;
 int setTries;
@@ -90,6 +92,8 @@ void setTune(){
     n = 5;
   }else if(mode == 4){
     n = 8;
+  }else if(mode == 5){
+    n = survivalMode;
   }
     for (int i = 0; i < n; i++) {
     randNo = random(0,8);
@@ -167,14 +171,66 @@ void setMode(){
 void piano() {
   while(mode == 1 & sensorVal11 != LOW){
     prepareSensorVal();
+    
+    sensorVal = digitalRead(2);
     if (sensorVal == LOW){
-    Serial.println("C");
+    Serial.println("c");
     tone(speakerPin, tones[0]);
     delay(100);
-    noTone(speakerPin);
+    noTone(speakerPin); }
+    
+    sensorVal1 = digitalRead(3);
+    if (sensorVal1 == LOW){
+    Serial.println("d");
+    tone(speakerPin, tones[1]);
+    delay(100);
+    noTone(speakerPin); }
+    
+    sensorVal2 = digitalRead(4);
+    if (sensorVal2 == LOW){
+    Serial.println("e");
+    tone(speakerPin, tones[2]);
+    delay(100);
+    noTone(speakerPin); }
+    
+    sensorVal3 = digitalRead(5);
+    if (sensorVal3 == LOW){
+    Serial.println("f");
+    tone(speakerPin, tones[3]);
+    delay(100);
+    noTone(speakerPin); }
+    
+    sensorVal4 = digitalRead(6);
+    if (sensorVal4 == LOW){
+    Serial.println("g");
+    tone(speakerPin, tones[4]);
+    delay(100);
+    noTone(speakerPin); }
+    
+    sensorVal5 = digitalRead(7);
+    if (sensorVal5 == LOW){
+    Serial.println("a");
+    tone(speakerPin, tones[5]);
+    delay(100);
+    noTone(speakerPin); }
+    
+    sensorVal6 = digitalRead(8);
+    if (sensorVal6 == LOW){
+    Serial.println("b");
+    tone(speakerPin, tones[6]);
+    delay(100);
+    noTone(speakerPin); }
+    
+    sensorVal7 = digitalRead(9);
+    if (sensorVal7 == LOW){
+    Serial.println("C");
+    tone(speakerPin, tones[7]);
+    delay(100);
+    noTone(speakerPin); }
+
+    
       }
     }
-}
 
 
 //Main Modes
