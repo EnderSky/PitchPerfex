@@ -230,9 +230,11 @@ void piano() {
 
     
       }
-    }
+}
 
+void survivalMode(){
 
+}
 //Main Modes
 void loop() {
   prepareSensorVal();
