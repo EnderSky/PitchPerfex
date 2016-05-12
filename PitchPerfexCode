@@ -31,7 +31,7 @@ void setup(){
   pinMode(13, OUTPUT);//Piezo
   randomSeed(analogRead(0));
 }
-void prepareSensorVal(){
+void prepareSensorVal(){                //Preparing SensorVal variables before everything
   int sensorVal = digitalRead(2); //(c)
   int sensorVal1 = digitalRead(3); //(d)
   int sensorVal2 = digitalRead(4); //(e)
@@ -48,7 +48,7 @@ void prepareSensorVal(){
   int notes[] = {'c', 'd', 'e', 'f', 'g', 'a', 'b', 'C'};
   int tones[] = {262, 294, 330, 349, 392, 440, 494, 523};
 }
-void playCorrectTune(){
+void playCorrectTune(){       //When the user gets the tune correct
   int speakerPin = 13;
   for(int i=0;i<8;i++){
     tone(speakerPin, tones[i]);
@@ -56,7 +56,7 @@ void playCorrectTune(){
     noTone(speakerPin);
   }
 }
- void playWrongTune(){
+ void playWrongTune(){        //When the user gets the tune wrong
   int speakerPin = 13;
   for(int i=8;i>-1;i--){
     tone(speakerPin, tones[i]);
@@ -64,7 +64,7 @@ void playCorrectTune(){
     noTone(speakerPin);
   }
  }
-void rememberSeq(int tries, int key){
+void rememberSeq(int tries, int key){ //Check if the tune played is correct
   int i = tries - 1;
   kp[i] = key;
   if(tries == setTries && mode != 1){
@@ -82,7 +82,7 @@ void rememberSeq(int tries, int key){
   }
 }
 
-void setTune(){
+void setTune(){       //Randomizing the tune
   int speakerPin = 13;
   int notes[] = {'c', 'd', 'e', 'f', 'g', 'a', 'b', 'C'};
   int tones[] = {262, 294, 330, 349, 392, 440, 494, 523};
@@ -107,7 +107,7 @@ void setTune(){
   }
 }
 
-void setMode(){
+void setMode(){       //Initializing the game, main menu, and setting the mode
   prepareSensorVal();
   Serial.println("Welcome to PitchPerfex! Select a mode using the left and right buttons.");
   Serial.println("        < Piano Mode >        ");
