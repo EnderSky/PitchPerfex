@@ -6,7 +6,7 @@ int survivalMode = 1;
 int survivalPart = 1;
 int initialize = 0;
 int mode;
-int setTries;
+int setTries = 3;
 int repeatNo;
 int played = 0;
 int randomTune[10];
@@ -146,7 +146,6 @@ void setMode(){       //Initializing the game, main menu, and setting the mode
         Serial.println("        < Easy Mode >       ");
       }else if (mode == 3){
         Serial.println("        < Medium Mode >       ");
-        setTries = 3;
       }else if (mode == 4){
         Serial.println("        < Hard Mode >       ");
       }else if (mode == 5){
