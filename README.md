@@ -1,5 +1,5 @@
-                                                      ~PITCHPERFEX~
-Welcome to PitchPerfex. In this game, we have a few modes: Piano, Easy, Medium, Hard, Survival Modes. This game also has a Konami Code for the purpose of debugging. Now let's get started.
+                                                      ~PITCHPERFEX/DISCHORD~
+Welcome to PitchPerfex, aka Dischord. In this game, we have a few modes: Piano, Easy, Medium, Hard, Survival Modes. This game also has a Konami Code for the purpose of debugging. Now let's get started.
 First up: The Piano Mode. This piano mode allows the user to play a normal keyboard with 8 notes: c,d,e,f,g,a,b,C. You can play for an unlimited amount of time until you decide to return to the main menu.
 Now the Modes of Different Difficulty. You will be presented with a tune containing a certain number of notes based on your difficulty level. You have to listen carefully, following which pressing the corresponding button to that note. If you get it correct, an ascending tune will be played. If not, a descending tune will be played. This will go on until you exit to the menu.
 Easy mode will contain 3 notes, Medium mode will contain 5 notes, while Hard mode will contain 8 notes.
