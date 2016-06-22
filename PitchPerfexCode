@@ -6,12 +6,12 @@ int survivalLevel = 1;
 int survivalPart = 1;
 int initialize = 0;
 int mode;
-int tries = 0;
 int setTries = 3;
 int survivalLives = 3;
 int repeatNo;
 int played = 0;
 int randomTune[10];
+int presses;
 int tries = 0;
 int kp[50];
 int notes[] = {'c', 'd', 'e', 'f', 'g', 'a', 'b', 'C'};
@@ -199,7 +199,7 @@ void rememberSeq(int presses, int key){ //Check if the tune played is correct
       played = 0;
       if(mode == 5){    //Print the survival level when user gets it correct
         if(survivalPart == 3){
-          surivalLevel++;
+          survivalLevel++;
         }else{
           survivalPart++;
         }
@@ -247,8 +247,10 @@ void setMode(){       //Initializing the game, main menu, and setting the mode
   Serial.println("Welcome to PitchPerfex! Select a mode using the left and right buttons.");
   Serial.println("        < Piano Mode >        ");
   mode = 1;
+  int sensorVal11 = digitalRead(1);
   while(sensorVal11 != LOW){
-    sensorVal9 = digitalRead(11);
+    sensorVal();
+    int sensorVal9 = digitalRead(11);
     if (sensorVal9 == LOW){
       if(mode == 1){
         mode = 5;
@@ -268,7 +270,7 @@ void setMode(){       //Initializing the game, main menu, and setting the mode
       }
       
     }
-    sensorVal10 = digitalRead(12);
+    int sensorVal10 = digitalRead(12);
     if (sensorVal10 == LOW){
       if (mode == 5){
         mode = 1;
@@ -310,25 +312,36 @@ void setMode(){       //Initializing the game, main menu, and setting the mode
 //Set the tries one could have. For every part someone clears they get one extra life.
 
 void survivalMode(){
-  while(mode == 5 && sensorVal11 !=LOW){
-  sensorVal();
 
-  sensorVal8 = digitalRead(10);
-  if(sensorVal8==LOW){
-    for(int i=0;i<4;i++){
-    repeatNo = randomTune[i];
-    tone(speakerPin, tones[repeatNo]);
-    delay(1000);
-    noTone(speakerPin);
+     Serial.print("Level ");
+     Serial.print(survivalLevel);
+     Serial.print(".");
+     Serial.println("survivalPart");
+     Serial.print("You have ");
+     Serial.print(survivalLives);
+     Serial.println("lives remaining.");
+    int sensorVal11 = digitalRead(1);
+  while(mode == 5 && sensorVal11 !=LOW){
+    sensorVal();
+    int speakerPin = 13;
+    int sensorVal8 = digitalRead(10);
+    if(sensorVal8==LOW){
+      for(int i=0;i<4;i++){
+      repeatNo = randomTune[i];
+      tone(speakerPin, tones[repeatNo]);
+      delay(1000);
+      noTone(speakerPin);
     }
   }
   }
 }
 
 void piano() {
+    int sensorVal11 = digitalRead(1);
   while(mode == 1 & sensorVal11 != LOW){
     sensorVal();
   }
+  initialize = 0;
 }
 
 
@@ -345,7 +358,8 @@ void loop() {
   if(mode == 5){    //Survival Mode
     survivalMode();
   }
-  sensorVal8 = digitalRead(10);
+  int speakerPin = 13;
+  int sensorVal8 = digitalRead(10);
   if(sensorVal8==LOW){
     for(int i=0;i<4;i++){
     repeatNo = randomTune[i];
