@@ -1,0 +1,12 @@
+Survival Mode:
+- Print level and part. Eg. Level 1.2 --- Done
+- Set the tries one could have. For every part someone clears they get one extra life. --- Done
+
+General:
+- Add in crotchets, quavers and semiquavers.
+- Add in program for light to signal when user input is accepted
+- Add in different range of notes for easy, medium and hard modes.
+- Have different degrees of correct answers: Good, Ok, Bad.
+
+Piano Mode:
+- Add increase and decrease in octave.
